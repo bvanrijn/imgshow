@@ -68,8 +68,6 @@ impl InlineImageBuilder {
 }
 
 fn main() {
-    // TODO: Detect iTerm.app and show warnings for other terminals. 
-
     let mut image = InlineImageBuilder::new();
     image
         .set_data(include_bytes!("../image.jpg").to_vec())
