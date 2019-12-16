@@ -1,6 +1,7 @@
 mod inline_image_builder;
 
 use crate::inline_image_builder::InlineImageBuilder;
+use clap::{App, Arg};
 use std::env;
 use std::process;
 
@@ -13,7 +14,7 @@ enum UnsupportedReason {
     Unknown,
 }
 
-fn get_terminal_support() -> Result<(), UnsupportedReason> {
+fn get_image_support() -> Result<(), UnsupportedReason> {
     let term_program_env = env::var("TERM_PROGRAM");
 
     if term_program_env.is_err() {
@@ -28,19 +29,32 @@ fn get_terminal_support() -> Result<(), UnsupportedReason> {
 }
 
 fn main() {
-    match get_terminal_support() {
-        Ok(_) => (),
-        Err(UnsupportedReason::AppleTerminal) => {
-            eprintln!("Apple's Terminal application is not supported. Please use iTerm2 (https://www.iterm2.com) and try again.");
-            process::exit(1);
-        }
-        Err(UnsupportedReason::EnvNotSet) => {
-            eprintln!("The TERM_PROGRAM environment variable is not set.");
-            process::exit(2);
-        }
-        Err(UnsupportedReason::Unknown) => {
-            eprintln!("Your terminal is unsupported for an unknown reason. If your terminal supports images, please let me know by opening an issue.");
-            process::exit(3);
+    let matches = App::new("imgshow")
+        .version("0.1.0")
+        .about("An image viewer for iTerm2")
+        .arg(
+            Arg::with_name("force_image_support")
+                .short("f")
+                .long("force-image-support")
+                .help("Try to show images (even if your terminal doesn't support it)"),
+        )
+        .get_matches();
+
+    if !matches.is_present("force_image_support") {
+        match get_image_support() {
+            Ok(_) => (),
+            Err(UnsupportedReason::AppleTerminal) => {
+                eprintln!("Apple's Terminal application is not supported. Please use iTerm2 (https://www.iterm2.com) and try again.");
+                process::exit(1);
+            }
+            Err(UnsupportedReason::EnvNotSet) => {
+                eprintln!("The TERM_PROGRAM environment variable is not set.");
+                process::exit(2);
+            }
+            Err(UnsupportedReason::Unknown) => {
+                eprintln!("Your terminal is unsupported for an unknown reason. If your terminal supports images, please let me know by opening an issue.");
+                process::exit(3);
+            }
         }
     }
 
