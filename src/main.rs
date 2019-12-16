@@ -82,7 +82,7 @@ enum UnsupportedReason {
     Unknown,
 }
 
-fn is_supported_terminal() -> Result<(), UnsupportedReason> {
+fn get_terminal_support() -> Result<(), UnsupportedReason> {
     let term_program_env = env::var("TERM_PROGRAM");
 
     if term_program_env.is_err() {
@@ -97,7 +97,7 @@ fn is_supported_terminal() -> Result<(), UnsupportedReason> {
 }
 
 fn main() {
-    match is_supported_terminal() {
+    match get_terminal_support() {
         Ok(_) => (),
         Err(UnsupportedReason::AppleTerminal) => {
             eprintln!("Apple's Terminal application is not supported. Please use iTerm2 (https://www.iterm2.com) and try again.");
