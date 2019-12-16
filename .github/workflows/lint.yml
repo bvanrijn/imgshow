@@ -1,0 +1,19 @@
+name: Lint
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install clippy
+        run: |
+          # https://github.com/rust-lang/rust-clippy#as-a-cargo-subcommand-cargo-clippy
+          rustup component add clippy
+      - name: Install fmt
+        run: |
+          # https://github.com/rust-lang/rustfmt#on-the-stable-toolchain
+          rustup component add rustfmt
+      - name: clippy
+        run: cargo clippy --verbose
+      - name: fmt
+        run: cargo fmt --verbose --check
