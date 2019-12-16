@@ -8,4 +8,5 @@ edition = "2018"
 
 [dependencies]
 base64 = "0.11.0"
+clap = "2.33.0"
 
