@@ -32,6 +32,10 @@ impl Display for InlineImageBuilder {
             write!(f, "width={};", self.width).expect("Can't write `width`");
         }
 
+        if self.height != "" {
+            write!(f, "height={};", self.height).expect("Can't write `height`");
+        }
+
         if self.preserve_aspect_ratio {
             write!(f, "preserveAspectRatio=1;").expect("Can't write `preserveAspectRatio`");
         } else {
