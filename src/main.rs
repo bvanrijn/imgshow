@@ -1,6 +1,8 @@
 use base64::encode;
+use std::env;
 use std::fmt;
 use std::fmt::Display;
+use std::process;
 
 #[derive(Debug, Default)]
 struct InlineImageBuilder {
@@ -71,7 +73,25 @@ impl InlineImageBuilder {
     }
 }
 
+fn is_iterm2() -> bool {
+    let term_program_env = env::var("TERM_PROGRAM");
+
+    if term_program_env.is_err() {
+        return false;
+    }
+
+    let term_program = term_program_env.unwrap();
+
+    term_program == "iTerm.app"
+}
+
 fn main() {
+    if !is_iterm2() {
+        eprintln!("imgshow won't work in your terminal. Please use iTerm2: https://www.iterm2.com/index.html");
+
+        process::exit(1);
+    }
+
     let mut image = InlineImageBuilder::new();
     image
         .set_data(include_bytes!("../image.jpg").to_vec())
