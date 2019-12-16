@@ -29,7 +29,7 @@ impl Display for InlineImageBuilder {
         }
 
         if self.width != "" {
-            write!(f, "width={};", encode(&self.name)).expect("Can't write `width`");
+            write!(f, "width={};", self.width).expect("Can't write `width`");
         }
 
         if self.preserve_aspect_ratio {
