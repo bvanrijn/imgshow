@@ -21,13 +21,43 @@ impl InlineImageBuilder {
         }
     }
 
-    pub fn set_data(&mut self, v: Vec<u8>) -> &mut Self {
-        self.data = v;
+    #[allow(dead_code)]
+    pub fn set_name(&mut self, v: String) -> &mut Self {
+        self.name = v;
+        self
+    }
+
+    #[allow(dead_code)]
+    pub fn set_size(&mut self, v: usize) -> &mut Self {
+        self.size = v;
+        self
+    }
+
+    #[allow(dead_code)]
+    pub fn set_width(&mut self, v: String) -> &mut Self {
+        self.width = v;
+        self
+    }
+
+    #[allow(dead_code)]
+    pub fn set_height(&mut self, v: String) -> &mut Self {
+        self.height = v;
+        self
+    }
+
+    #[allow(dead_code)]
+    pub fn set_preserve_aspect_ratio(&mut self, v: bool) -> &mut Self {
+        self.preserve_aspect_ratio = v;
         self
     }
 
     pub fn set_inline(&mut self, v: bool) -> &mut Self {
         self.inline = v;
+        self
+    }
+
+    pub fn set_data(&mut self, v: Vec<u8>) -> &mut Self {
+        self.data = v;
         self
     }
 }
