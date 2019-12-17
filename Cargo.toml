@@ -10,4 +10,5 @@ description = "An image viewer for iTerm2"
 [dependencies]
 base64 = "0.11.0"
 clap = "2.33.0"
+reqwest = "0.9.24"
 
