@@ -1,7 +1,7 @@
 mod inline_image_builder;
 
 use crate::inline_image_builder::InlineImageBuilder;
-use clap::{App, Arg};
+use clap::{crate_description, crate_name, crate_version, App, Arg};
 use std::env;
 use std::process;
 
@@ -29,9 +29,9 @@ fn get_image_support() -> Result<(), UnsupportedReason> {
 }
 
 fn main() {
-    let matches = App::new("imgshow")
-        .version("0.1.0")
-        .about("An image viewer for iTerm2")
+    let matches = App::new(crate_name!())
+        .version(crate_version!())
+        .about(crate_description!())
         .arg(
             Arg::with_name("force_image_support")
                 .short("f")
